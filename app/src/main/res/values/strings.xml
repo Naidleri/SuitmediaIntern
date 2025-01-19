@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SuitmediaIntern</string>
+    <string name="background">Background</string>
+    <string name="button_add_photo">button_add_photo</string>
 </resources>

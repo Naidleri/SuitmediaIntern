@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SuitmediaIntern"
 include(":app")
- 
+include(":core")
