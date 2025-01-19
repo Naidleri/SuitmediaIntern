@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -8,6 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        buildConfigField("String", "BASE_URL", "\"https://reqres.in/api/\"")
         minSdk = 21
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,6 +31,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -52,6 +57,12 @@ dependencies {
     implementation (libs.kotlinx.coroutines.android)
     implementation (libs.koin.android)
     implementation (libs.koin.androidx.compose)
+    implementation(libs.retrofit)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
 
     testImplementation (libs.mockk)
     testImplementation (libs.kotlinx.coroutines.test)

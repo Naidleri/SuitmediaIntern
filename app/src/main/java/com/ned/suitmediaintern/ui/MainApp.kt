@@ -1,7 +1,8 @@
 package com.ned.suitmediaintern.ui
 
 import android.app.Application
-import com.ned.core.data.injection.repositoryModule
+import com.ned.core.injection.networkModule
+import com.ned.core.injection.repositoryModule
 import com.ned.suitmediaintern.injection.useCaseModule
 import com.ned.suitmediaintern.injection.viewModelModule
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +20,8 @@ class MainApp : Application() {
                 listOf(
                     useCaseModule,
                     viewModelModule,
-                    repositoryModule
+                    repositoryModule,
+                    networkModule
                 )
             )
         }

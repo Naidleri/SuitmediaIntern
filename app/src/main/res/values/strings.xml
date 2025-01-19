@@ -2,4 +2,7 @@
     <string name="app_name">SuitmediaIntern</string>
     <string name="background">Background</string>
     <string name="button_add_photo">button_add_photo</string>
+    <string name="header_second_screen">Second Screen</string>
+    <string name="header_third_screen">Third Screen</string>
+    <string name="back_arrow">Back</string>
 </resources>
