@@ -1,6 +1,5 @@
 package com.ned.suitmediaintern.ui.presentation.firstscreen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,12 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,9 +28,11 @@ import androidx.navigation.NavHostController
 import com.ned.core.data.helper.SharedPreferencesHelper
 import com.ned.suitmediaintern.R
 import com.ned.suitmediaintern.ui.component.Button
+import com.ned.suitmediaintern.ui.component.CustomAlertDialog
 import com.ned.suitmediaintern.ui.component.TextField
 import com.ned.suitmediaintern.ui.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun FirstScreen(
@@ -39,9 +41,25 @@ fun FirstScreen(
     navController: NavHostController
 ) {
     val state by viewModel.state.collectAsState()
+    var showErrorDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val sharedPreferencesHelper = remember { SharedPreferencesHelper(context) }
+
+    if (state.isError) {
+        showErrorDialog = true
+    }
+
+    if (showErrorDialog) {
+        CustomAlertDialog(
+            title = "Error",
+            message = state.errorMessage,
+            onDismissRequest = {
+                showErrorDialog = false
+                viewModel.onEvent(PalindromeEvent.OnDismissError)
+            }
+        )
+    }
 
     FirstScreenContent(
         state = state,
@@ -103,15 +121,6 @@ fun FirstScreenContent(
                 onValueChange = { onEvent(PalindromeEvent.OnPalindromeTextChange(it)) },
                 placeholder = "Palindrome"
             )
-
-            if (state.isError) {
-                Text(
-                    text = state.errorMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
 
             if (state.isLoading) {
                 CircularProgressIndicator(
