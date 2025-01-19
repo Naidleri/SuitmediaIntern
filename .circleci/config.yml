@@ -1,17 +1,24 @@
-version: 2.1
+ersion: 2.1
  
 orbs:
-  android: circleci/android@0.2.1
+  android: circleci/android@2.1.2  
  
 jobs:
   build:
-    executor:
-      name: android/android
-      java-version: "17.0"
+    docker:
+      - image: cimg/android:2024.01-java17  
+    environment:
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
     steps:
       - checkout
       - restore_cache:
           key: android-orb-v1-
+      - run:
+          name: Set Java Version
+          command: |
+            java -version
+            echo $JAVA_HOME
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
