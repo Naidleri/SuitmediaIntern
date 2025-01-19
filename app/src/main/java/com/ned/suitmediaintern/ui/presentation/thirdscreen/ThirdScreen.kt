@@ -66,8 +66,8 @@ fun ThirdScreen(
         }
         ThirdScreenContent(
             user = users,
-            navigateToSecondScreen = {
-                val userItem = users[it]
+            navigateToSecondScreen = { index ->
+                val userItem = users[index]
                 val fullName = "${userItem?.firstName} ${userItem?.lastName}"
                 sharedPreferencesHelper.saveUserFullName(fullName)
                 navigateToSecondScreen()

@@ -81,7 +81,9 @@ fun SecondScreen(
             userName = userName,
             dataName = dataName,
             onNavigateToThirdScreen = {
-                navController.navigate(Screen.ThirdScreen.route)
+                navController.navigate(Screen.ThirdScreen.route) {
+                    popUpTo(Screen.SecondScreen.route) { saveState = true }
+                }
             },
             modifier = modifier
         )

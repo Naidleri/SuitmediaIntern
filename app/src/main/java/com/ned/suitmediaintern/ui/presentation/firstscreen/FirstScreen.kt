@@ -50,8 +50,9 @@ fun FirstScreen(
             viewModel.onEvent(PalindromeEvent.OnNextClicked)
             if (state.name.isNotEmpty()) {
                 sharedPreferencesHelper.saveUsername(state.name)
-                Log.d("FirstScreen", "Username saved : ${state.name}")
-                navController.navigate(Screen.SecondScreen.route)
+                navController.navigate(Screen.SecondScreen.route) {
+                    popUpTo(Screen.FirstScreen.route) { saveState = true }
+                }
             }
         },
         modifier = modifier
