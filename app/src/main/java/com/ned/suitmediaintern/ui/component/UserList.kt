@@ -23,10 +23,12 @@ fun UserList(
     firstname: String,
     lastname: String,
     email: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = modifier
+        .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(avatar)
@@ -38,7 +40,7 @@ fun UserList(
                 .clip(CircleShape)
         )
         Column (
-            modifier = modifier.padding(start = 16.dp),
+            modifier = modifier.padding(start = 16.dp,end = 24.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
@@ -59,6 +61,6 @@ fun UserListPreview() {
         avatar = "https://reqres.in/img/faces/1-image.jpg",
         firstname = "haris",
         lastname = "ardiansyah",
-        email = "harisss@gmail.com"
+        email = "harisss@gmail.com",
     )
 }

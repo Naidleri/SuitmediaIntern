@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ned.suitmediaintern.ui.presentation.firstscreen.FirstScreen
+import androidx.navigation.compose.rememberNavController
 import com.ned.suitmediaintern.ui.theme.SuitmediaInternTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SuitmediaInternTheme {
-               FirstScreen()
+                val navController = rememberNavController()
+                SuitmediaApp(navController = navController)
             }
         }
     }

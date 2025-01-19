@@ -42,6 +42,13 @@ class FirstScreenViewModel (private val palindromeUseCase: PalindromeUseCase
                     }
                 }
             }
+            PalindromeEvent.OnNextClicked -> {
+                if (_state.value.name.isEmpty()) {
+                    _state.value = _state.value.copy(isError = true, errorMessage = "Name is empty")
+                } else {
+
+                }
+            }
         }
     }
 

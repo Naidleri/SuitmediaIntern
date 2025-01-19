@@ -5,4 +5,6 @@
     <string name="header_second_screen">Second Screen</string>
     <string name="header_third_screen">Third Screen</string>
     <string name="back_arrow">Back</string>
+    <string name="choose_a_user_hint">Choose a User</string>
+    <string name="welcome_hint">Welcome</string>
 </resources>

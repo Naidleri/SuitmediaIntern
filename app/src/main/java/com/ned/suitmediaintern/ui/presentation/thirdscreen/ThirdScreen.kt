@@ -1,18 +1,22 @@
 package com.ned.suitmediaintern.ui.presentation.thirdscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.ned.core.data.helper.SharedPreferencesHelper
 import com.ned.core.domain.model.User
 import com.ned.suitmediaintern.R
 import com.ned.suitmediaintern.ui.component.UserList
@@ -22,9 +26,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ThirdScreen(
     viewModel: ThirdScreenViewModel = koinViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    navigateToSecondScreen: () -> Unit
 ) {
     val users = viewModel.users.collectAsLazyPagingItems()
+
+    val context = LocalContext.current
+    val sharedPreferencesHelper = remember { SharedPreferencesHelper(context) }
+
     Column {
         CenterAlignedTopAppBar(
             title = {
@@ -55,14 +64,25 @@ fun ThirdScreen(
                 color = Color.LightGray,
             )
         }
-        ThirdScreenContent(user = users)
+        ThirdScreenContent(
+            user = users,
+            navigateToSecondScreen = {
+                val userItem = users[it]
+                val fullName = "${userItem?.firstName} ${userItem?.lastName}"
+                sharedPreferencesHelper.saveUserFullName(fullName)
+                navigateToSecondScreen()
+            }
+        )
     }
 }
+
+
 
 @Composable
 fun ThirdScreenContent(
     user: LazyPagingItems<User>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSecondScreen : (Int) -> Unit
 ) {
     val loadState = user.loadState
 
@@ -84,7 +104,10 @@ fun ThirdScreenContent(
                                 avatar = it.avatar,
                                 firstname = it.firstName,
                                 lastname = it.lastName,
-                                email = it.email
+                                email = it.email,
+                                modifier = Modifier.clickable {
+                                    navigateToSecondScreen(index)
+                                }
                             )
                             Box(
                                 modifier = Modifier
